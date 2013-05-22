@@ -1,0 +1,9 @@
+# This trace file tests latency tracking for TSO writes.
+
+P0 W 0 # Placed in write buffer, retired.
+P0 W 1 # Placed in write buffer.
+P0 W 2 # Write buffer size exceeded, initiate drain: 222 * 3 = 666 cycles.
+P0 W 3 # Placed in write buffer, retired.
+P0 R 4 # Read miss, 223 cycles (hides latency of retired write)
+
+# Total: 666 + 223 = 889 cycles 

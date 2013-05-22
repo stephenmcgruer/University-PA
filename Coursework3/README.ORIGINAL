@@ -1,0 +1,24 @@
+Usage: parse_trace.py [options] consistency_model trace_file_name
+
+Note:
+        Acceptable consistency models are 'SC' or 'TSO'.
+
+Options:
+  -h, --help            show this help message and exit
+  -p NUMBER_PROCESSORS, --number_processors=NUMBER_PROCESSORS
+                        The number of processors (and thus caches.) [default:
+                        4]
+  -l NUMBER_LINES, --number_cache_lines=NUMBER_LINES
+                        The number of cache lines per cache. [default: 128]
+  -s LINE_SIZE, --cache_line_size=LINE_SIZE
+                        The size of each cache line. [default: 4]
+  -w WRITE_BUFFER_SIZE, --write_buffer_size=WRITE_BUFFER_SIZE
+                        The size of the write buffer. [default: 32]
+  -r RETIRE_AT_COUNT, --retire_at_count=RETIRE_AT_COUNT
+                        The N for the retire-at-N policy. [default: 1]
+  -d, --debug           Turn debug mode on. [default: False]
+
+
+Has been tested on the version of Python available on DICE (python 2.6). Timings
+are approximately 4s for trace1.out, and 16s for trace2.out with the default
+options.

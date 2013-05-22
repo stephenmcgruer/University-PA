@@ -1,0 +1,13 @@
+# This trace file tests latency tracking for TSO reads.
+
+P0 R 0 # Miss: 223 cycles.
+P0 R 1 # Cache hit: 3 cycles.
+P1 R 5 # Prime another cache.
+P0 R 6 # Fetch from bus: 23 cycles.
+P0 W 5 # Immediately retired write.
+P0 W 8 # Write in buffer.
+P0 R 8 # Snoop buffer: 1 cycle.
+
+# Drain time is then (222 - 1) + 222 = 443
+
+# 223 + 3 + 23 + 1 + 443 = 693

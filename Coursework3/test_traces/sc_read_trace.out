@@ -1,0 +1,8 @@
+# This trace file tests latency tracking for SC reads.
+
+P0 R 0 # Miss: 222 cycles.
+P0 R 1 # Cache hit: 2 cycles.
+P1 R 5 # Prime another cache.
+P0 R 6 # Fetch from bus: 22 cycles.
+
+# 222 + 2 + 22 = 246
