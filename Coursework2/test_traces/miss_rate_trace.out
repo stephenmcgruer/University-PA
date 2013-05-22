@@ -1,0 +1,35 @@
+# This trace file tests the tracking of miss rates.
+
+# Comments in this file assume the default 128 cache lines and 4 words/line.
+
+# 20 accesses, split into: 3 read misses, 7 read hits, 5 write misses, 5 write
+# hits.
+
+# Correct stats should be:
+#   Miss rate: (3 + 5) / 20 = 8 / 20 = 40%
+#   Read miss rate: 3 / 10 = 30%
+#   Write miss rate: 5 / 10 = 50%
+
+P0 R 0 # Initial read of line: read miss.
+P0 R 0 # Subsequent read: read hit.
+P0 W 0 # Write to shared: write miss.
+P0 W 0 # Write to modified: write hit.
+P0 W 0 # Write to modified: write hit.
+P0 R 0 # Read to modified: read hit.
+P0 R 1 # Read to same line: read hit.
+P0 R 512 # Read to different memory line with same slot: read miss.
+P0 R 514 # Read to same line: read hit.
+P0 W 513 # Write to shared: write miss.
+P0 R 514 # Read to modified: read hit.
+P0 W 514 # Write to modified: write hit.
+
+P1 R 513 # Read by other processor, flushes memory line.
+
+P0 W 514 # Write to shared: write miss.
+P0 W 514 # Write to modified: write hit.
+P0 W 514 # Write to modified: write hit.
+P0 R 512 # Read to modified: read hit.
+P0 R 0 # Read to different tag: read miss.
+P0 R 0 # Read to shared: read hit.
+P0 W 5 # Write to invalid: write miss.
+P0 W 0 # Write to shared: write miss.

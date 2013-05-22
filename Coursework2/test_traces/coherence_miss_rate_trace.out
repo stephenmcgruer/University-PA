@@ -1,0 +1,40 @@
+# This trace file tests the tracking of __coherence__ miss rates.
+
+# Comments in this file assume the default 128 cache lines and 4 words/line.
+
+# Coherence miss rates should be:
+#   P0: 0%
+#   P1: 25%
+#   P2: 80%
+#   P3: Unimportant - this processor is used to cause cache misses on others.
+
+P0 R 0 # Addresses 0-3 only accessed by P0
+P0 W 1
+P0 R 1
+P0 W 2
+P0 W 0
+P0 W 2
+P0 R 2
+P0 W 2
+
+P1 R 4 # Read miss.
+P1 R 4
+P1 W 4 # Write miss.
+P1 R 4
+P1 W 4
+P1 R 8 # Read miss.
+P1 R 8
+P3 R 4
+P1 W 4 # Write miss due to P0 (P0 forced modified => shared by reading)
+
+P2 R 8 # Read miss.
+P2 R 8
+P3 W 8
+P2 W 8 # Write miss due to P3.
+P3 W 9
+P2 R 9 # Read miss due to P3.
+P3 W 10
+P2 W 10 # Write miss due to P3.
+P3 W 11
+P2 R 11 # Write miss due to P3.
+P3 R 11

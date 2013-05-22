@@ -1,0 +1,39 @@
+# This trace file tests local cache behaviour; i.e. that the cache follows the
+# MSI protocol for local changes.
+
+# Comments in this file assume the default 128 cache lines and 4 words/line.
+
+# INVALID + read_miss == SHARED
+# tag == 0, slot == 0
+P0 R 0
+
+# INVALID + read_miss + read_miss == SHARED
+# tag == 1, slot == 1
+P0 R 516
+P0 R 516
+
+# INVALID + read_miss + write_miss == MODIFIED
+# tag == 2, slot == 2
+P0 R 1032
+P0 W 1032
+
+# INVALID + write_miss == MODIFIED
+# tag == 3, slot == 3
+P0 W 1548
+
+# INVALID + write_miss + write_miss == MODIFIED
+# tag == 4, slot == 4
+P0 W 2064
+P0 W 2064
+
+# INVALID + write_miss + read_miss == MODIFIED
+# tag == 5, slot == 5
+P0 W 2580
+P0 R 2580
+
+# INVALID + read_miss + read_miss + write_miss + write_miss == MODIFIED
+# tag == 6, slot == 6
+P0 R 3096
+P0 R 3096
+P0 W 3096
+P0 R 3096

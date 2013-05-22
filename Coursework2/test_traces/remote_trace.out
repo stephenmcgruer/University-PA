@@ -1,0 +1,32 @@
+# This trace file tests remote cache behaviour; i.e. that the cache follows the
+# MSI protocol for remote changes. The processor under test is P0.
+
+# Comments in this file assume the default 128 cache lines and 4 words/line.
+
+# SHARED + remote_write_miss == INVALID
+# tag == 0, slot == 0
+P0 R 0
+P1 W 0
+
+# SHARED + remote_read_miss == SHARED
+# tag == 1, slot == 1
+P0 R 516
+P1 R 516
+
+# MODIFIED + remote_read_miss == SHARED
+# tag == 2, slot == 2
+P0 W 1032
+P1 R 1032
+
+# MODIFIED + remote_write_miss == INVALID
+# tag == 3, slot == 3
+P0 W 1548
+P1 W 1548
+
+# INVALID + remote_read_miss == INVALID
+# tag == 4, slot == 4
+P1 R 2064
+
+# INVALID + remote_write_miss == INVALID
+# tag == 5, slot == 5
+P1 W 2580

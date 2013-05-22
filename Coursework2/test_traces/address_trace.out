@@ -1,0 +1,32 @@
+# This trace file tests the tracking of addresses accessed by N processors,
+# N in {1, 2, more than 2}.
+
+# Addresses 0,7 are accessed by 1 processor .
+# Addresses 2,3 are accessed by 2 processors.
+# Addresses 4,6 are accessed by 3 processors.
+# Addresses 1,5 are accessed by 4 processors.
+
+P3 W 3
+P0 R 0
+P3 R 2
+P0 W 1
+P1 W 4
+P2 R 1
+P1 R 5
+P3 R 5
+P2 W 6
+P2 R 3
+P3 R 1
+P1 R 6
+P2 W 5
+P1 W 2
+P1 W 1
+P0 W 4
+P0 R 5
+P3 R 7
+P1 R 1
+P0 W 0
+P3 W 7
+P2 W 3
+P2 R 4
+P3 W 6
